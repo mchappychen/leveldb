@@ -1,21 +1,18 @@
-var levelup = require("levelup")
-var leveldown = require("leveldown")
+var levelup = require('levelup')
+var leveldown = require('leveldown')
 
-// 1) Create our database:
-var db = levelup(leveldown("./mydb")
+// 1) Create our store
+var db = levelup(leveldown("./mydb"))
 
-// 2) Put in a key and value
-db.put("A", 123, function(error){
-  if(error){
-    return console.log("Error: ",error);
-  }
-  
-  // 3) Get the key's value
-  db.get("A",function(error,value){
-    if(error){
-      return console.log("Error: ",error);
-    }
-    console.log(value)
-  });
-  
-});
+// 2) Put a key & value
+db.put("A", 123, function (err) {
+  if (err) return console.log('Ooops!', err) // some kind of I/O error
+
+  // 3) Fetch by key
+  db.get("A", function (err, value) {
+    if (err) return console.log('Ooops!', err) // likely the key was not found
+
+    // Ta da!
+    console.log('name=' + value)
+  })
+})
